@@ -11,7 +11,7 @@ interface Props {
 const List = ({ todos }: Props) => {
 	const { removeTodo } = useTodoStore()
 	return (
-		<>
+		<div className="p-5">
 			{todos.map((t) => (
 				<p
 					className="text-3xl flex gap-5 items-center w-200"
@@ -34,7 +34,7 @@ const List = ({ todos }: Props) => {
 					)}
 				</p>
 			))}
-		</>
+		</div>
 	)
 }
 

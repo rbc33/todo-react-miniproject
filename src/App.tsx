@@ -27,7 +27,8 @@ function App() {
 						/>
 					}
 				/>
-				<Route path="/newTask" element={<AddTodo />} />
+				<Route path="/addtodo" element={<AddTodo />} />
+				<Route path="/*" element={<h1 className="p-5">Error 404</h1>} />
 			</Routes>
 		</>
 	)

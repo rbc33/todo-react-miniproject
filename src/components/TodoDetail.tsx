@@ -12,7 +12,7 @@ const TodoDetail = () => {
 	const todo = todos.find((t) => t.id === parseInt(id!))
 
 	return (
-		<div className="text-3xl space-x-2">
+		<div className="text-3xl space-x-2 p-5">
 			<label>Task: </label>
 			<input
 				type="text"
