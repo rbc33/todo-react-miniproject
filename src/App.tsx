@@ -19,7 +19,7 @@ function App() {
 				</Link>
 			</nav>
 			<div className="flex">
-				<aside className="w-30 flex flex-col gap-4 border-2 border-white h-screen p-5">
+				<aside className="w-35 flex flex-col gap-4 border-2 border-white h-screen p-5 font-bold text-xl">
 					<Link to="/">Home</Link>
 					<Link to="/addtodo">New Todo</Link>
 					<Link to="/about">About</Link>

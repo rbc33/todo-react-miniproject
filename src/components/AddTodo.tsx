@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import useTodoStore from '../store/store'
+import { useNavigate } from 'react-router-dom'
 // import List from './List'
 
 const AddTodo = () => {
@@ -7,10 +8,12 @@ const AddTodo = () => {
 	const [task, setTask] = useState<string>()
 	const [completed, setCompleted] = useState<boolean>(false)
 	const newId = Math.max(...todos.map((t) => t.id))
+	const navigate = useNavigate()
 
 	const handleClick = () => {
 		if (task) {
 			addTodo({ id: newId, task: task, completed: completed })
+			navigate('/')
 		}
 	}
 	return (
