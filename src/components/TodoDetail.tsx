@@ -1,10 +1,16 @@
 import { useParams } from 'react-router-dom'
-import useTodoStore from '../store/store'
+import useTodoStore, { type Todo } from '../store/store'
+
+// interface Props {
+// 	todos: Todo[]
+// }
 
 const TodoDetail = () => {
+	// const TodoDetail = ({ todos }: Props) => {
 	const { id } = useParams()
 	const { todos, toggleTodo, updateTodo } = useTodoStore()
 	const todo = todos.find((t) => t.id === parseInt(id!))
+
 	return (
 		<div className="text-3xl space-x-2">
 			<label>Task: </label>
