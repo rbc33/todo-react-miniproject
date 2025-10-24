@@ -9,7 +9,7 @@ interface Props {
 }
 
 const List = ({ todos }: Props) => {
-	const { removeTodo } = useTodoStore()
+	const { removeTodo, toggleTodo } = useTodoStore()
 	return (
 		<div className="p-5">
 			{todos.map((t) => (
@@ -27,11 +27,13 @@ const List = ({ todos }: Props) => {
 						{t.task}
 					</a>
 
-					{t.completed ? (
-						<FaCheck className="text-green-500 size-5" />
-					) : (
-						<ImCross className="text-red-500 size-5" />
-					)}
+					<div onClick={() => toggleTodo(t.id)}>
+						{t.completed ? (
+							<FaCheck className="text-green-500 size-5" />
+						) : (
+							<ImCross className="text-red-500 size-5" />
+						)}
+					</div>
 				</p>
 			))}
 		</div>
