@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom'
-import useTodoStore, { type Todo } from '../store/store'
+import useTodoStore from '../store/store'
+// import useTodoStore, { type Todo } from '../store/store'
 
 // interface Props {
 // 	todos: Todo[]
@@ -18,7 +19,7 @@ const TodoDetail = () => {
 				type="text"
 				placeholder={todo?.task}
 				defaultValue={todo?.task}
-				onChange={(e) => updateTodo(todo!.id, e.target.value)}
+				onChange={(e) => updateTodo({ ...todo!, task: e.target.value })}
 			/>
 			<label htmlFor={todo!.id.toString()}>Completed:</label>
 			<input
