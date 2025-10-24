@@ -10,7 +10,7 @@ interface TodoStore {
 	addTodo: (newTodo: Todo) => void
 	removeTodo: (id: number) => void
 	toggleTodo: (id: number) => void
-	updateTodo: (updatedTodo: Todo) => void
+	updateTodo: (id: number, newTask: string) => void
 }
 
 const useTodoStore = create<TodoStore>((set) => ({
@@ -34,10 +34,10 @@ const useTodoStore = create<TodoStore>((set) => ({
 				todo.id === id ? { ...todo, completed: !todo.completed } : todo
 			),
 		})),
-	updateTodo: (updatedTodo: Todo) =>
+	updateTodo: (id: number, newTask: string) =>
 		set((state) => ({
 			todos: state.todos.map((todo) =>
-				todo.id === updatedTodo.id ? updatedTodo : todo
+				todo.id === id ? { ...todo, task: newTask } : todo
 			),
 		})),
 }))

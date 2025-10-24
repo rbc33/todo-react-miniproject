@@ -23,7 +23,10 @@ const List = ({ todos }: Props) => {
 "
 						onClick={() => removeTodo(t.id)}
 					/>
-					{t.task}{' '}
+					<a className="text-dec" href={`/todo/${t.id}`}>
+						{t.task}
+					</a>
+
 					{t.completed ? (
 						<FaCheck className="text-green-500 size-5" />
 					) : (
