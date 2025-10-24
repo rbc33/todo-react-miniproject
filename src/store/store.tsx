@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-interface Todo {
+export interface Todo {
 	id: number
 	task: string
 	completed: boolean
@@ -13,7 +13,7 @@ interface TodoStore {
 	updateTodo: (updatedTodo: Todo) => void
 }
 
-const useStore = create<TodoStore>((set) => ({
+const useTodoStore = create<TodoStore>((set) => ({
 	todos: [
 		{ id: 1, task: 'Read the project brief', completed: true },
 		{ id: 2, task: 'Create a project repository', completed: false },
@@ -42,4 +42,4 @@ const useStore = create<TodoStore>((set) => ({
 		})),
 }))
 
-export default useStore
+export default useTodoStore

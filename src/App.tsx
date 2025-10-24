@@ -1,14 +1,13 @@
 import './App.css'
-import useStore from './store/store'
+import List from './components/List'
+import useTodoStore from './store/store'
 
 function App() {
-	const { todos } = useStore()
+	const { todos } = useTodoStore()
 
 	return (
 		<>
-			{todos.map((t) => (
-				<p key={`todo-${t.id}`}>{t.task}</p>
-			))}
+			<List todos={todos} />
 		</>
 	)
 }
