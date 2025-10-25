@@ -29,7 +29,7 @@ const TodoDetail = () => {
 			<label>Task: </label>
 			<br />
 			<input
-				className="border-2 w-[40vw]"
+				className="mt-2 border-2 border-slate-400 w-[40vw]"
 				type="text"
 				placeholder={todo?.task}
 				defaultValue={todo?.task}

@@ -34,7 +34,10 @@ const List = ({ todos }: Props) => {
 											scope="row"
 											className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
 										>
-											<a className="text-dec" href={`/todo/${t.id}`}>
+											<a
+												className="hover:text-slate-400"
+												href={`/todo/${t.id}`}
+											>
 												{t.task}
 											</a>
 										</th>
