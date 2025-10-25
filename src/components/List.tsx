@@ -9,7 +9,7 @@ export interface Props {
 const List = ({ todos }: Props) => {
 	const { removeTodo } = useTodoStore()
 	return (
-		<div className="">
+		<div className="font-roboto">
 			<div className="relative overflow-x-auto">
 				<table className="w-full text-xl text-left rtl:text-right text-gray-500 dark:text-gray-400">
 					<thead className="text-xl text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

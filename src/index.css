@@ -1,4 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 @import 'tailwindcss';
+
+@font-face {
+	font-family: 'Avenir';
+	src: url('/public/fonts/Avenir-Black.woff2') format('woff2');
+	font-weight: 900;
+	font-display: swap;
+}
+
+@theme {
+	--font-roboto: 'Roboto', sans-serif;
+}
 
 :root {
 	font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -53,5 +66,5 @@ button:focus-visible {
 }
 
 body {
-	@apply bg-gray-800 text-white;
+	@apply bg-gray-800 text-white font-roboto;
 }

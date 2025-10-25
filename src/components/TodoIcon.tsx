@@ -1,8 +1,6 @@
-import React from 'react'
-import useTodoStore from '../store/store'
-import { type Todo } from '../store/store'
 import { FaCheck } from 'react-icons/fa'
 import { ImCross } from 'react-icons/im'
+import useTodoStore, { type Todo } from '../store/store'
 
 interface ToggleIconProps {
 	todo: Todo
