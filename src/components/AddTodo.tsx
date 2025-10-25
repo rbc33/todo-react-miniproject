@@ -21,8 +21,9 @@ const AddTodo = () => {
 			<label>Task: </label>
 			<br />
 			<input
+				className=" ml-2 border-2 border-slate-400 w-[40vw]"
 				type="text"
-				placeholder={'task'}
+				placeholder={' task'}
 				onChange={(e) => setTask(e.target.value)}
 			/>
 			<br />
