@@ -1,9 +1,8 @@
-import React from 'react'
 import { Route, Routes } from 'react-router-dom'
+import About from '../components/About'
+import AddTodo from '../components/AddTodo'
 import List from '../components/List'
 import TodoDetail from '../components/TodoDetail'
-import AddTodo from '../components/AddTodo'
-import About from '../components/About'
 import useTodoStore from '../store/store'
 
 const AppRouter = () => {
