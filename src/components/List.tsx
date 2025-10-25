@@ -1,15 +1,13 @@
-import { type Todo } from '../store/store'
-import { FaCheck } from 'react-icons/fa'
-import { ImCross } from 'react-icons/im'
 import { RiDeleteBin6Line } from 'react-icons/ri'
-import useTodoStore from '../store/store'
+import useTodoStore, { type Todo } from '../store/store'
+import TodoIcon from './TodoIcon'
 
-interface Props {
+export interface Props {
 	todos: Todo[]
 }
 
 const List = ({ todos }: Props) => {
-	const { removeTodo, toggleTodo } = useTodoStore()
+	const { removeTodo } = useTodoStore()
 	return (
 		<div className="">
 			<div className="relative overflow-x-auto">
@@ -39,13 +37,7 @@ const List = ({ todos }: Props) => {
 									</a>
 								</th>
 								<td className="px-6 py-4">
-									<div onClick={() => toggleTodo(t.id)}>
-										{t.completed ? (
-											<FaCheck className="text-green-500 size-5" />
-										) : (
-											<ImCross className="text-red-500 size-5" />
-										)}
-									</div>
+									<TodoIcon todo={t} />
 								</td>
 
 								<td className="px-6 py-4">
