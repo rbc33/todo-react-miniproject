@@ -13,9 +13,9 @@ const TodoDetail = () => {
 	// const TodoDetail = ({ todos }: Props) => {
 	const { id } = useParams()
 	const { todos, updateTodo, toggleTodo } = useTodoStore()
-	const [task, setTask] = useState<string>()
-	// const [completed, setCompleted] = useState<boolean>(false)
 	const todo = todos.find((t) => t.id === parseInt(id!))
+	const [task, setTask] = useState<string>(todo!.task)
+	// const [completed, setCompleted] = useState<boolean>(false)
 	const navigate = useNavigate()
 
 	const handleClick = () => {
