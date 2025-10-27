@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 const Aside = () => {
 	return (
-		<aside className="w-35 flex flex-col gap-4 border-2 border-slate-400 h-screen p-5 font-bold text-xl">
+		<aside className="w-35 -mt-0.5 flex flex-col gap-4 border-2 border-slate-400 h-screen p-5 font-bold text-xl">
 			<Link className="hover:text-slate-400" to="/">
 				Home
 			</Link>
