@@ -1,9 +1,9 @@
 const About = () => {
 	return (
 		<div className=" text-2xl p-5 w-[60vw]">
-			A Kanban board built with React, TypeScript, and Tailwind CSS. Features
-			drag-and-drop functionality, Zustand state management with persistance,
-			and custom Google Fonts integration.
+			This is Kanban board built with React, TypeScript, and Tailwind CSS.
+			Features drag-and-drop functionality, Zustand state management with
+			persistance, and custom Google Fonts integration.
 		</div>
 	)
 }
