@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import useTodoStore, { type Todo } from '../store/store'
 
 export interface Props {
@@ -17,7 +18,6 @@ const List = ({ todos }: Props) => {
 		const todo = todos.find((t) => t.id === todoId)
 		if (todo) {
 			const updatedTodo = { ...todo, status: status }
-			console.log('Todo actualizado:', updatedTodo) // Muestra el objeto con el nuevo status
 			updateTodo(updatedTodo)
 		}
 	}
@@ -56,9 +56,9 @@ const List = ({ todos }: Props) => {
 									onDragStart={(e) => handleDragStart(e, todo.id)}
 									className={className(todo)}
 								>
-									<a href={`/todo/${todo.id}`}>
+									<Link to={`/todo/${todo.id}`}>
 										<p>{todo.title}</p>
-									</a>
+									</Link>
 								</li>
 							))}
 					</ul>
@@ -79,9 +79,9 @@ const List = ({ todos }: Props) => {
 									onDragStart={(e) => handleDragStart(e, todo.id)}
 									className={className(todo)}
 								>
-									<a href={`/todo/${todo.id}`}>
+									<Link to={`/todo/${todo.id}`}>
 										<p>{todo.title}</p>
-									</a>
+									</Link>
 								</li>
 							))}
 					</ul>
@@ -103,9 +103,9 @@ const List = ({ todos }: Props) => {
 									onDragStart={(e) => handleDragStart(e, todo.id)}
 									className={className(todo)}
 								>
-									<a href={`/todo/${todo.id}`}>
+									<Link to={`/todo/${todo.id}`}>
 										<p>{todo.title}</p>
-									</a>
+									</Link>
 								</li>
 							))}
 					</ul>
