@@ -1,9 +1,9 @@
 const About = () => {
 	return (
-		<div className=" text-2xl p-5">
-			A modern Todo application built with React, TypeScript, and Tailwind CSS.
-			Features a Flowbite table component, Zustand store, and custom Google
-			Fonts integration.
+		<div className=" text-2xl p-5 w-[60vw]">
+			A Kanban board built with React, TypeScript, and Tailwind CSS. Features
+			drag-and-drop functionality, Zustand state management with persistance,
+			and custom Google Fonts integration.
 		</div>
 	)
 }

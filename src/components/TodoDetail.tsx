@@ -7,11 +7,16 @@ const TodoDetail = () => {
 	const { updateTodo } = useTodoStore()
 	const todo = useTodoStore((state) => state.todos.find((t) => t.id === id!))
 
-	const [title, setTitle] = useState<string>('')
-	const [description, setDescription] = useState<string>('')
+	const [title, setTitle] = useState<string>(todo!.title)
+	const [description, setDescription] = useState<string>(todo!.description)
+	const [assignee, setAssignee] = useState<string | undefined>(todo!.assignee)
+	const [dueDate, setDueDate] = useState(todo!.dueDate)
 	const [status, setStatus] = useState<'To Do' | 'In Progress' | 'Done'>(
-		'To Do'
+		todo!.status
 	)
+	const [priority, setPriority] = useState<
+		'Low' | 'Medium' | 'High' | undefined
+	>(todo!.priority)
 
 	const navigate = useNavigate()
 
@@ -23,11 +28,14 @@ const TodoDetail = () => {
 				title: title,
 				status: status,
 				description: description,
+				assignee: assignee,
+				dueDate: dueDate,
+				priority: priority,
 			})
 			navigate('/')
 		}
 	}
-	const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+	const handleState = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		e.preventDefault()
 		if (
 			e.target.value === 'To Do' ||
@@ -37,9 +45,18 @@ const TodoDetail = () => {
 			setStatus(e!.target!.value!)
 	}
 
+	const handlePriority = (e: React.ChangeEvent<HTMLSelectElement>) => {
+		e.preventDefault()
+		if (
+			e.target.value === 'Low' ||
+			e.target.value === 'Medium' ||
+			e.target.value === 'High'
+		)
+			setPriority(e!.target!.value!)
+	}
 	return (
-		<div className="text-3xl space-x-2 space-y-3.5 p-5">
-			<label>Task: </label>
+		<div className="text-2xl space-x-2 space-y-3.5 p-5">
+			<label>Title: </label>
 			<br />
 			<input
 				className="mt-2 border-2 border-slate-400 w-[40vw]"
@@ -49,24 +66,64 @@ const TodoDetail = () => {
 				onChange={(e) => setTitle(e.target.value)}
 			/>
 			<br />
-			<label htmlFor={todo!.id.toString()}>Completed:</label>
+			<label htmlFor={todo!.id.toString()}>Status:</label>
 			<select
+				className="mt-2 border-2 border-slate-400 w-[12vw]"
 				id="NewTodo"
 				name="status"
 				value={status}
-				onChange={(e) => handleChange(e)}
+				onChange={(e) => handleState(e)}
 			>
 				<option value="To Do">To Do</option>
 				<option value="In Progress">In Progress</option>
 				<option value="Done">Done</option>
 			</select>
 			<br />
+			<label htmlFor={'newTodo'}>Priority:</label>
+
+			<select
+				className="mt-2 border-2 border-slate-400 w-[12vw]"
+				id="NewTodo"
+				name="status"
+				value={priority}
+				onChange={(e) => handlePriority(e)}
+			>
+				<option value="Low">Low</option>
+				<option value="Medium">Medium</option>
+				<option value="High">High</option>
+			</select>
+			<br />
+			<label htmlFor="descrption">Description:</label>
+			<br />
 			<textarea
+				id="description"
 				className="mt-2 border-2 border-slate-400 w-[40vw]"
 				placeholder={' Descrption...'}
 				value={description}
 				onChange={(e) => setDescription(e.target.value)}
 			/>
+			<br />
+			<label htmlFor="author">Assignee: </label>
+			<br />
+			<input
+				className="mt-2 border-2 border-slate-400 w-[40vw]"
+				id="author"
+				type="text"
+				placeholder={'assignee...'}
+				value={assignee}
+				onChange={(e) => setAssignee(e.target.value)}
+			/>
+			{todo?.createdDate && (
+				<p className="mt-2">Created at: {todo!.createdDate}</p>
+			)}
+			<label htmlFor="due">Due Date: </label>
+			<input
+				className="mt-2 border-2 border-slate-400 w-[13vw] h-10"
+				type="date"
+				value={dueDate}
+				onChange={(e) => setDueDate(e.target.value)}
+			/>
+			<br />
 			<button onClick={handleClick}>Update Todo</button>
 		</div>
 	)

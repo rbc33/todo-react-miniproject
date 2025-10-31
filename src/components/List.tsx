@@ -1,7 +1,4 @@
-// import { RiDeleteBin6Line } from 'react-icons/ri'
 import useTodoStore, { type Todo } from '../store/store'
-// import TodoIcon from './TodoIcon'
-// import { todo } from 'node:test'
 
 export interface Props {
 	todos: Todo[]
@@ -29,6 +26,17 @@ const List = ({ todos }: Props) => {
 		e.preventDefault()
 	}
 
+	const className = (todo: Todo) => {
+		if (!todo.priority)
+			return 'p-2 bg-slate-700 rounded cursor-move hover:bg-slate-200'
+		if (todo.priority === 'Low')
+			return 'p-2 bg-green-900 rounded cursor-move hover:bg-green-600'
+		if (todo.priority === 'Medium')
+			return 'p-2 bg-orange-600 rounded cursor-move hover:bg-orange-400'
+		if (todo.priority === 'High')
+			return 'p-2 bg-red-900 rounded cursor-move hover:bg-red-600'
+	}
+
 	return (
 		<div className="flex gap-8 p-5">
 			<div
@@ -45,7 +53,7 @@ const List = ({ todos }: Props) => {
 								key={todo.id}
 								draggable
 								onDragStart={(e) => handleDragStart(e, todo.id)}
-								className="p-2 bg-green-900 rounded cursor-move hover:bg-green-600"
+								className={className(todo)}
 							>
 								<a href={`/todo/${todo.id}`}>
 									<p>{todo.title}</p>
@@ -68,7 +76,7 @@ const List = ({ todos }: Props) => {
 								key={todo.id}
 								draggable
 								onDragStart={(e) => handleDragStart(e, todo.id)}
-								className="p-2 bg-green-900 rounded cursor-move hover:bg-green-600"
+								className={className(todo)}
 							>
 								<a href={`/todo/${todo.id}`}>
 									<p>{todo.title}</p>
@@ -92,7 +100,7 @@ const List = ({ todos }: Props) => {
 								key={todo.id}
 								draggable
 								onDragStart={(e) => handleDragStart(e, todo.id)}
-								className="p-2 bg-slate-700 rounded cursor-move hover:bg-green-200"
+								className={className(todo)}
 							>
 								<a href={`/todo/${todo.id}`}>
 									<p>{todo.title}</p>

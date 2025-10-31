@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-
+import { persist, createJSONStorage } from 'zustand/middleware'
 export interface Todo {
 	id: string
 	title: string
@@ -17,78 +17,85 @@ interface TodoStore {
 	updateTodo: (updateTodo: Todo) => void
 }
 
-const useTodoStore = create<TodoStore>((set) => ({
-	todos: [
-		{
-			id: '1',
-			title: 'Design Landing Page',
-			description: 'Create a visually appealing landing page for the website.',
-			assignee: 'Mary Davis',
-			status: 'To Do',
-			priority: 'High',
-			createdDate: '2023-09-15',
-			dueDate: '2023-09-30',
-		},
-		{
-			id: '2',
-			title: 'Develop User Registration',
-			description:
-				'Implement user registration functionality with email verification.',
-			assignee: 'Jane Smith',
-			status: 'In Progress',
-			priority: 'Medium',
-			createdDate: '2023-09-16',
-			dueDate: '2023-10-10',
-		},
-		{
-			id: '3',
-			title: 'Bug Fix: Login Issue',
-			description: 'Investigate and fix the login problem reported by users.',
-			assignee: 'Mark Johnson',
-			status: 'In Progress',
-			priority: 'High',
-			createdDate: '2023-09-17',
-			dueDate: '2023-09-25',
-		},
-		{
-			id: '4',
-			title: 'Release Version 1.0',
-			description:
-				'Prepare for the release of the first version of the application.',
-			assignee: 'Sarah Brown',
-			status: 'To Do',
-			priority: 'High',
-			createdDate: '2023-09-18',
-			dueDate: '2023-10-05',
-		},
-		{
-			id: '5',
-			title: 'Update Documentation',
-			description:
-				'Update user documentation with the latest features and changes.',
-			assignee: 'David Wilson',
-			status: 'Done',
-			priority: 'Low',
-			createdDate: '2023-09-19',
-			dueDate: '2023-09-30',
-		},
-	],
+const useTodoStore = create<TodoStore>()(
+	persist(
+		(set) => ({
+			todos: [
+				{
+					id: '1',
+					title: 'Design Landing Page',
+					description:
+						'Create a visually appealing landing page for the website.',
+					assignee: 'Mary Davis',
+					status: 'To Do',
+					priority: 'High',
+					createdDate: '2023-09-15',
+					dueDate: '2023-09-30',
+				},
+				{
+					id: '2',
+					title: 'Develop User Registration',
+					description:
+						'Implement user registration functionality with email verification.',
+					assignee: 'Jane Smith',
+					status: 'In Progress',
+					priority: 'Medium',
+					createdDate: '2023-09-16',
+					dueDate: '2023-10-10',
+				},
+				{
+					id: '3',
+					title: 'Bug Fix: Login Issue',
+					description:
+						'Investigate and fix the login problem reported by users.',
+					assignee: 'Mark Johnson',
+					status: 'In Progress',
+					priority: 'High',
+					createdDate: '2023-09-17',
+					dueDate: '2023-09-25',
+				},
+				{
+					id: '4',
+					title: 'Release Version 1.0',
+					description:
+						'Prepare for the release of the first version of the application.',
+					assignee: 'Sarah Brown',
+					status: 'To Do',
+					priority: 'High',
+					createdDate: '2023-09-18',
+					dueDate: '2023-10-05',
+				},
+				{
+					id: '5',
+					title: 'Update Documentation',
+					description:
+						'Update user documentation with the latest features and changes.',
+					assignee: 'David Wilson',
+					status: 'Done',
+					priority: 'Low',
+					createdDate: '2023-09-19',
+					dueDate: '2023-09-30',
+				},
+			],
 
-	addTodo: (newTodo: Todo) =>
-		set((state) => ({ todos: [...state.todos, newTodo] })),
-	removeTodo: (id: number) =>
-		set((state) => ({
-			todos: state.todos.filter((todo) => todo.id !== id.toString()),
-		})),
-	updateTodo: (updateTodo: Todo) =>
-		set((state) => {
-			console.log('Store recibió:', updateTodo.status) // Debug
-			return {
-				todos: state.todos.map((todo) =>
-					todo.id === updateTodo.id ? updateTodo : todo
-				),
-			}
+			addTodo: (newTodo: Todo) =>
+				set((state) => ({ todos: [...state.todos, newTodo] })),
+			removeTodo: (id: number) =>
+				set((state) => ({
+					todos: state.todos.filter((todo) => todo.id !== id.toString()),
+				})),
+			updateTodo: (updateTodo: Todo) =>
+				set((state) => ({
+					todos: state.todos.map((todo) =>
+						todo.id === updateTodo.id ? updateTodo : todo
+					),
+				})),
 		}),
-}))
+		{
+			name: 'todo-storage',
+			storage: createJSONStorage(() => localStorage),
+		}
+	)
+)
 
 export default useTodoStore
