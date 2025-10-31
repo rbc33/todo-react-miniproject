@@ -28,86 +28,99 @@ const List = ({ todos }: Props) => {
 
 	const className = (todo: Todo) => {
 		if (!todo.priority)
-			return 'p-2 bg-slate-700 rounded cursor-move hover:bg-slate-200'
+			return 'p-2 bg-slate-700 rounded cursor-move hover:bg-slate-900'
 		if (todo.priority === 'Low')
-			return 'p-2 bg-green-900 rounded cursor-move hover:bg-green-600'
+			return 'p-2 bg-green-600/80 rounded cursor-move hover:bg-green-700'
 		if (todo.priority === 'Medium')
-			return 'p-2 bg-orange-600 rounded cursor-move hover:bg-orange-400'
+			return 'p-2 bg-orange-600/80 rounded cursor-move hover:bg-orange-400'
 		if (todo.priority === 'High')
-			return 'p-2 bg-red-900 rounded cursor-move hover:bg-red-600'
+			return 'p-2 bg-red-700/80 rounded cursor-move hover:bg-red-600'
 	}
 
 	return (
-		<div className="flex gap-8 p-5">
-			<div
-				className="flex flex-col min-h-96 w-[25vw] p-4 border-2 border-gray-300"
-				onDrop={(e) => handleDrop(e, 'To Do')}
-				onDragOver={handleDragOver}
-			>
-				<p className="text-xl font-bold mb-4">Open</p>
-				<ul className="space-y-2">
-					{todos
-						.filter((t) => t.status == 'To Do')
-						.map((todo) => (
-							<li
-								key={todo.id}
-								draggable
-								onDragStart={(e) => handleDragStart(e, todo.id)}
-								className={className(todo)}
-							>
-								<a href={`/todo/${todo.id}`}>
-									<p>{todo.title}</p>
-								</a>
-							</li>
-						))}
-				</ul>
-			</div>
-			<div
-				className="flex flex-col min-h-96 w-[25vw] p-4 border-2 border-gray-300"
-				onDrop={(e) => handleDrop(e, 'In Progress')}
-				onDragOver={handleDragOver}
-			>
-				<p className="text-xl font-bold mb-4">Pending</p>
-				<ul className="space-y-2">
-					{todos
-						.filter((t) => t.status == 'In Progress')
-						.map((todo) => (
-							<li
-								key={todo.id}
-								draggable
-								onDragStart={(e) => handleDragStart(e, todo.id)}
-								className={className(todo)}
-							>
-								<a href={`/todo/${todo.id}`}>
-									<p>{todo.title}</p>
-								</a>
-							</li>
-						))}
-				</ul>
-			</div>
+		<div className="flex flex-col">
+			<div className="flex gap-8 p-5">
+				<div
+					className="flex flex-col min-h-96 w-[25vw] p-4 border-2 border-gray-300"
+					onDrop={(e) => handleDrop(e, 'To Do')}
+					onDragOver={handleDragOver}
+				>
+					<p className="text-xl font-bold mb-4">Open</p>
+					<ul className="space-y-2">
+						{todos
+							.filter((t) => t.status == 'To Do')
+							.map((todo) => (
+								<li
+									key={todo.id}
+									draggable
+									onDragStart={(e) => handleDragStart(e, todo.id)}
+									className={className(todo)}
+								>
+									<a href={`/todo/${todo.id}`}>
+										<p>{todo.title}</p>
+									</a>
+								</li>
+							))}
+					</ul>
+				</div>
+				<div
+					className="flex flex-col min-h-96 w-[25vw] p-4 border-2 border-gray-300"
+					onDrop={(e) => handleDrop(e, 'In Progress')}
+					onDragOver={handleDragOver}
+				>
+					<p className="text-xl font-bold mb-4">Pending</p>
+					<ul className="space-y-2">
+						{todos
+							.filter((t) => t.status == 'In Progress')
+							.map((todo) => (
+								<li
+									key={todo.id}
+									draggable
+									onDragStart={(e) => handleDragStart(e, todo.id)}
+									className={className(todo)}
+								>
+									<a href={`/todo/${todo.id}`}>
+										<p>{todo.title}</p>
+									</a>
+								</li>
+							))}
+					</ul>
+				</div>
 
-			<div
-				className="flex flex-col min-h-96 w-[25vw] p-4 border-2 border-gray-300"
-				onDrop={(e) => handleDrop(e, 'Done')}
-				onDragOver={handleDragOver}
-			>
-				<p className="text-xl font-bold mb-4">Completed</p>
-				<ul className="space-y-2">
-					{todos
-						.filter((t) => t.status === 'Done')
-						.map((todo) => (
-							<li
-								key={todo.id}
-								draggable
-								onDragStart={(e) => handleDragStart(e, todo.id)}
-								className={className(todo)}
-							>
-								<a href={`/todo/${todo.id}`}>
-									<p>{todo.title}</p>
-								</a>
-							</li>
-						))}
-				</ul>
+				<div
+					className="flex flex-col min-h-96 w-[25vw] p-4 border-2 border-gray-300"
+					onDrop={(e) => handleDrop(e, 'Done')}
+					onDragOver={handleDragOver}
+				>
+					<p className="text-xl font-bold mb-4">Completed</p>
+					<ul className="space-y-2">
+						{todos
+							.filter((t) => t.status === 'Done')
+							.map((todo) => (
+								<li
+									key={todo.id}
+									draggable
+									onDragStart={(e) => handleDragStart(e, todo.id)}
+									className={className(todo)}
+								>
+									<a href={`/todo/${todo.id}`}>
+										<p>{todo.title}</p>
+									</a>
+								</li>
+							))}
+					</ul>
+				</div>
+			</div>
+			<div className="flex justify-center items-center">
+				<p className="text-2xl font-bold mx-5 mb-2">Priority Legend:</p>
+				<div className="bg-green-600/80 size-6 border border-gray-300 mr-2"></div>
+				<p className="text-lg mr-4">Low</p>
+				<div className="bg-orange-600/80 size-6 border border-gray-300 mr-2"></div>
+				<p className="text-lg mr-4">Medium</p>
+				<div className="bg-red-700/80 size-6 border border-gray-300 mr-2"></div>
+				<p className="text-lg mr-4">High</p>
+				<div className="bg-slate-700 size-6 border border-gray-300 mr-2"></div>
+				<p className="text-lg mr-4">Undefined</p>
 			</div>
 		</div>
 	)

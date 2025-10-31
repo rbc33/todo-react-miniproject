@@ -4,8 +4,8 @@ import useTodoStore from '../store/store'
 
 const TodoDetail = () => {
 	const { id } = useParams()
-	const { updateTodo } = useTodoStore()
-	const todo = useTodoStore((state) => state.todos.find((t) => t.id === id!))
+	const { todos, updateTodo, removeTodo } = useTodoStore()
+	const todo = todos.find((t) => t.id === id!)
 
 	const [title, setTitle] = useState<string>(todo!.title)
 	const [description, setDescription] = useState<string>(todo!.description)
@@ -54,6 +54,12 @@ const TodoDetail = () => {
 		)
 			setPriority(e!.target!.value!)
 	}
+
+	const handleDelete = () => {
+		removeTodo(parseInt(todo!.id))
+		navigate('/')
+	}
+
 	return (
 		<div className="text-2xl space-x-2 space-y-3.5 p-5">
 			<label>Title: </label>
@@ -124,7 +130,12 @@ const TodoDetail = () => {
 				onChange={(e) => setDueDate(e.target.value)}
 			/>
 			<br />
-			<button onClick={handleClick}>Update Todo</button>
+			<div className="flex">
+				<button onClick={handleClick}>Update Todo</button>
+				<button className="bg-red-500/80! ml-5" onClick={handleDelete}>
+					Delete Todo
+				</button>
+			</div>
 		</div>
 	)
 }

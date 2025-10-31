@@ -58,24 +58,24 @@ const AddTodo = () => {
 			<label>Title: </label>
 			<br />
 			<input
-				className="mt-2 border-2 border-slate-400 w-[40vw]"
+				className="mt-2 border-2 border-slate-400 w-[40vw] px-2 py-1.5"
 				type="text"
-				placeholder={' title'}
+				placeholder={'title'}
 				onChange={(e) => setTitle(e.target.value)}
 			/>
 			<br />
 			<label>Description: </label>
 			<br />
 			<textarea
-				className="mt-2 border-2 border-slate-400 w-[40vw]"
-				placeholder={' Descrption...'}
+				className="mt-2 border-2 border-slate-400 w-[40vw] px-2 py-1.5"
+				placeholder={'Descrption...'}
 				onChange={(e) => setDescription(e.target.value)}
 			/>
 			<br />
-			<label htmlFor={'newTodo'}>Status:</label>
+			<label htmlFor={'status'}>Status:</label>
 			<select
 				className="mt-2 border-2 border-slate-400 w-[12vw]"
-				id="NewTodo"
+				id="status"
 				name="status"
 				onChange={(e) => handleStatus(e)}
 			>
@@ -84,10 +84,10 @@ const AddTodo = () => {
 				<option value="Done">Done</option>
 			</select>
 			<br />
-			<label htmlFor={'newTodo'}>Priority:</label>
+			<label htmlFor={'priority'}>Priority:</label>
 			<select
 				className="mt-2 border-2 border-slate-400 w-[12vw]"
-				id="NewTodo"
+				id="priority"
 				name="status"
 				onChange={(e) => handlePriority(e)}
 			>
@@ -99,7 +99,7 @@ const AddTodo = () => {
 			<label htmlFor="author">Assignee: </label>
 			<br />
 			<input
-				className="mt-2 border-2 border-slate-400 w-[40vw]"
+				className="mt-2 border-2  border-slate-400 w-[40vw] px-2 py-1.5"
 				id="author"
 				type="text"
 				placeholder={'assignee...'}
@@ -108,16 +108,14 @@ const AddTodo = () => {
 			<br />
 			<label htmlFor="due">Due Date: </label>
 			<input
-				className="mt-2 border-2 border-slate-400 w-[13vw] h-10"
+				className="mt-2 border-2 border-slate-400 w-[13vw] h-10 px-2 py-1.5"
 				type="date"
-				value={dueDate}
 				onChange={(e) => setDueDate(e.target.value)}
 			/>
 			<br />
 			<button className="mt-5" onClick={handleClick}>
 				Add Todo
 			</button>
-			{/* <List todos={todos} /> */}
 		</div>
 	)
 }
