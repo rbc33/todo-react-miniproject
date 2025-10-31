@@ -1,27 +1,40 @@
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import useTodoStore from '../store/store'
-import TodoIcon from './TodoIcon'
-// import useTodoStore, { type Todo } from '../store/store'
-
-// interface Props {
-// 	todos: Todo[]
-// }
 
 const TodoDetail = () => {
-	// const TodoDetail = ({ todos }: Props) => {
 	const { id } = useParams()
-	const { todos, updateTodo } = useTodoStore()
-	const todo = todos.find((t) => t.id === parseInt(id!))
-	const [task, setTask] = useState<string>(todo!.task)
-	// const [completed, setCompleted] = useState<boolean>(false)
+	const { updateTodo } = useTodoStore()
+	const todo = useTodoStore((state) => state.todos.find((t) => t.id === id!))
+
+	const [title, setTitle] = useState<string>('')
+	const [description, setDescription] = useState<string>('')
+	const [status, setStatus] = useState<'To Do' | 'In Progress' | 'Done'>(
+		'To Do'
+	)
+
 	const navigate = useNavigate()
 
 	const handleClick = () => {
-		if (typeof task === 'string') {
-			updateTodo({ id: todo!.id, task: task, completed: todo!.completed })
+		if (title && description) {
+			updateTodo({
+				...todo,
+				id: todo!.id.toString(),
+				title: title,
+				status: status,
+				description: description,
+			})
 			navigate('/')
 		}
+	}
+	const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+		e.preventDefault()
+		if (
+			e.target.value === 'To Do' ||
+			e.target.value === 'In Progress' ||
+			e.target.value === 'Done'
+		)
+			setStatus(e!.target!.value!)
 	}
 
 	return (
@@ -31,22 +44,29 @@ const TodoDetail = () => {
 			<input
 				className="mt-2 border-2 border-slate-400 w-[40vw]"
 				type="text"
-				placeholder={todo?.task}
-				defaultValue={todo?.task}
-				onChange={(e) => setTask(e.target.value)}
+				placeholder={todo?.title}
+				value={title}
+				onChange={(e) => setTitle(e.target.value)}
 			/>
 			<br />
-			<div className="flex items-center space-x-3">
-				<label htmlFor={todo!.id.toString()}>Completed:</label>
-				{/* <input
-				className="size-6 ml-2 border-slate-400"
-				type="checkbox"
-				onClick={() => setCompleted(!todo!.completed)}
-				id={todo!.id.toString()}
-			/> */}
-				<TodoIcon todo={todo!} />
-			</div>
+			<label htmlFor={todo!.id.toString()}>Completed:</label>
+			<select
+				id="NewTodo"
+				name="status"
+				value={status}
+				onChange={(e) => handleChange(e)}
+			>
+				<option value="To Do">To Do</option>
+				<option value="In Progress">In Progress</option>
+				<option value="Done">Done</option>
+			</select>
 			<br />
+			<textarea
+				className="mt-2 border-2 border-slate-400 w-[40vw]"
+				placeholder={' Descrption...'}
+				value={description}
+				onChange={(e) => setDescription(e.target.value)}
+			/>
 			<button onClick={handleClick}>Update Todo</button>
 		</div>
 	)

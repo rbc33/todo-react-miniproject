@@ -1,45 +1,94 @@
 import { create } from 'zustand'
 
 export interface Todo {
-	id: number
-	task: string
-	completed: boolean
+	id: string
+	title: string
+	description: string
+	assignee?: string
+	priority?: 'Low' | 'Medium' | 'High'
+	status: 'To Do' | 'In Progress' | 'Done'
+	createdDate?: string
+	dueDate?: string
 }
 interface TodoStore {
 	todos: Todo[]
 	addTodo: (newTodo: Todo) => void
 	removeTodo: (id: number) => void
-	toggleTodo: (id: number) => void
 	updateTodo: (updateTodo: Todo) => void
 }
 
 const useTodoStore = create<TodoStore>((set) => ({
 	todos: [
-		{ id: 1, task: 'Read the project brief', completed: true },
-		{ id: 2, task: 'Create a project repository', completed: false },
-		{ id: 3, task: 'Create React application using Vite', completed: false },
-		{ id: 4, task: 'Finish Day 1 Development Tasks', completed: false },
-		{ id: 5, task: 'Finish Day 1 Research Tasks', completed: false },
-		{ id: 6, task: 'Finish Day 2 Development Tasks', completed: false },
-		{ id: 7, task: 'Finish Day 2 Research Tasks', completed: false },
+		{
+			id: '1',
+			title: 'Design Landing Page',
+			description: 'Create a visually appealing landing page for the website.',
+			assignee: 'Mary Davis',
+			status: 'To Do',
+			priority: 'High',
+			createdDate: '2023-09-15',
+			dueDate: '2023-09-30',
+		},
+		{
+			id: '2',
+			title: 'Develop User Registration',
+			description:
+				'Implement user registration functionality with email verification.',
+			assignee: 'Jane Smith',
+			status: 'In Progress',
+			priority: 'Medium',
+			createdDate: '2023-09-16',
+			dueDate: '2023-10-10',
+		},
+		{
+			id: '3',
+			title: 'Bug Fix: Login Issue',
+			description: 'Investigate and fix the login problem reported by users.',
+			assignee: 'Mark Johnson',
+			status: 'In Progress',
+			priority: 'High',
+			createdDate: '2023-09-17',
+			dueDate: '2023-09-25',
+		},
+		{
+			id: '4',
+			title: 'Release Version 1.0',
+			description:
+				'Prepare for the release of the first version of the application.',
+			assignee: 'Sarah Brown',
+			status: 'To Do',
+			priority: 'High',
+			createdDate: '2023-09-18',
+			dueDate: '2023-10-05',
+		},
+		{
+			id: '5',
+			title: 'Update Documentation',
+			description:
+				'Update user documentation with the latest features and changes.',
+			assignee: 'David Wilson',
+			status: 'Done',
+			priority: 'Low',
+			createdDate: '2023-09-19',
+			dueDate: '2023-09-30',
+		},
 	],
 
 	addTodo: (newTodo: Todo) =>
 		set((state) => ({ todos: [...state.todos, newTodo] })),
 	removeTodo: (id: number) =>
-		set((state) => ({ todos: state.todos.filter((todo) => todo.id !== id) })),
-	toggleTodo: (id: number) =>
 		set((state) => ({
-			todos: state.todos.map((todo) =>
-				todo.id === id ? { ...todo, completed: !todo.completed } : todo
-			),
+			todos: state.todos.filter((todo) => todo.id !== id.toString()),
 		})),
 	updateTodo: (updateTodo: Todo) =>
-		set((state) => ({
-			todos: state.todos.map((todo) =>
-				todo.id === updateTodo.id ? { ...todo, ...updateTodo } : todo
-			),
-		})),
+		set((state) => {
+			console.log('Store recibió:', updateTodo.status) // Debug
+			return {
+				todos: state.todos.map((todo) =>
+					todo.id === updateTodo.id ? updateTodo : todo
+				),
+			}
+		}),
 }))
 
 export default useTodoStore
