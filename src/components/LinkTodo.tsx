@@ -1,6 +1,5 @@
-import React from 'react'
-import type { Todo } from '../store/store'
 import { Link } from 'react-router-dom'
+import type { Todo } from '../store/store'
 
 interface Props {
 	todo: Todo

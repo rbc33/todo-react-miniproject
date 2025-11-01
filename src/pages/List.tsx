@@ -1,8 +1,8 @@
 import Legend from '../components/Legend'
-import LinkTodo from '../components/LinkTodo'
+import Panel from '../components/Panel'
 import useTodoStore, { type Todo } from '../store/store'
 
-export interface Props {
+interface Props {
 	todos: Todo[]
 }
 
@@ -27,85 +27,30 @@ const List = ({ todos }: Props) => {
 		e.preventDefault()
 	}
 
-	const className = (todo: Todo) => {
-		if (!todo.priority)
-			return 'p-2 bg-slate-700 rounded cursor-move hover:bg-slate-900'
-		if (todo.priority === 'Low')
-			return 'p-2 bg-green-600/80 rounded cursor-move hover:bg-green-700'
-		if (todo.priority === 'Medium')
-			return 'p-2 bg-orange-600/80 rounded cursor-move hover:bg-orange-400'
-		if (todo.priority === 'High')
-			return 'p-2 bg-red-700/80 rounded cursor-move hover:bg-red-600'
-	}
-	const tailCont =
-		'flex flex-col min-h-96 w-[25vw] p-4 border-2 border-gray-400'
 	return (
 		<div className="flex flex-col">
 			<div className="flex gap-8 p-5">
-				<div
-					className={tailCont}
-					onDrop={(e) => handleDrop(e, 'To Do')}
-					onDragOver={handleDragOver}
-				>
-					<p className="text-xl font-bold mb-4">Open</p>
-					<ul className="space-y-2">
-						{todos
-							.filter((t) => t.status == 'To Do')
-							.map((todo) => (
-								<li
-									key={todo.id}
-									draggable
-									onDragStart={(e) => handleDragStart(e, todo.id)}
-									className={className(todo)}
-								>
-									<LinkTodo todo={todo} />
-								</li>
-							))}
-					</ul>
-				</div>
-				<div
-					className={tailCont}
-					onDrop={(e) => handleDrop(e, 'In Progress')}
-					onDragOver={handleDragOver}
-				>
-					<p className="text-xl font-bold mb-4">Pending</p>
-					<ul className="space-y-2">
-						{todos
-							.filter((t) => t.status == 'In Progress')
-							.map((todo) => (
-								<li
-									key={todo.id}
-									draggable
-									onDragStart={(e) => handleDragStart(e, todo.id)}
-									className={className(todo)}
-								>
-									<LinkTodo todo={todo} />
-								</li>
-							))}
-					</ul>
-				</div>
-
-				<div
-					className={tailCont}
-					onDrop={(e) => handleDrop(e, 'Done')}
-					onDragOver={handleDragOver}
-				>
-					<p className="text-xl font-bold mb-4">Completed</p>
-					<ul className="space-y-2">
-						{todos
-							.filter((t) => t.status === 'Done')
-							.map((todo) => (
-								<li
-									key={todo.id}
-									draggable
-									onDragStart={(e) => handleDragStart(e, todo.id)}
-									className={className(todo)}
-								>
-									<LinkTodo todo={todo} />
-								</li>
-							))}
-					</ul>
-				</div>
+				<Panel
+					todos={todos}
+					status="To Do"
+					handleDrop={handleDrop}
+					handleDragOver={handleDragOver}
+					handleDragStart={handleDragStart}
+				/>
+				<Panel
+					todos={todos}
+					status="In Progress"
+					handleDrop={handleDrop}
+					handleDragOver={handleDragOver}
+					handleDragStart={handleDragStart}
+				/>
+				<Panel
+					todos={todos}
+					status="Done"
+					handleDrop={handleDrop}
+					handleDragOver={handleDragOver}
+					handleDragStart={handleDragStart}
+				/>
 			</div>
 			<Legend />
 		</div>
