@@ -18,8 +18,9 @@ const List = ({ todos }: Props) => {
 		const todoId = e.dataTransfer.getData('todoId')
 		const todo = todos.find((t) => t.id === todoId)
 		if (todo) {
-			const updatedTodo = { ...todo, status: status }
-			updateTodo(updatedTodo)
+			// const updatedTodo = { ...todo, status: status }
+			// updateTodo(updatedTodo)
+			updateTodo({ ...todo, status: status })
 		}
 	}
 

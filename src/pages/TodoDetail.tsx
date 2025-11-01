@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import useTodoStore from '../store/store'
+import EditCreate from '../components/Form'
 
 const TodoDetail = () => {
 	const { id } = useParams()
@@ -62,76 +63,15 @@ const TodoDetail = () => {
 
 	return (
 		<div className="flex">
-			<div className="text-2xl space-x-2 space-y-3.5 p-5">
-				<label>Title: </label>
-				<br />
-				<input
-					className="mt-2 border-2 border-slate-400 w-[40vw]"
-					type="text"
-					placeholder={todo?.title}
-					value={title}
-					onChange={(e) => setTitle(e.target.value)}
-				/>
-				<br />
-				<label htmlFor={todo!.id.toString()}>Status:</label>
-				<select
-					className="mt-2 border-2 border-slate-400 w-[12vw]"
-					id="NewTodo"
-					name="status"
-					value={status}
-					onChange={(e) => handleState(e)}
-				>
-					<option value="To Do">To Do</option>
-					<option value="In Progress">In Progress</option>
-					<option value="Done">Done</option>
-				</select>
-				<br />
-				<label htmlFor={'newTodo'}>Priority:</label>
-
-				<select
-					className="mt-2 border-2 border-slate-400 w-[12vw]"
-					id="NewTodo"
-					name="status"
-					value={priority}
-					onChange={(e) => handlePriority(e)}
-				>
-					<option value="Low">Low</option>
-					<option value="Medium">Medium</option>
-					<option value="High">High</option>
-				</select>
-				<br />
-				<label htmlFor="descrption">Description:</label>
-				<br />
-				<textarea
-					id="description"
-					className="mt-2 border-2 border-slate-400 w-[40vw]"
-					placeholder={' Descrption...'}
-					value={description}
-					onChange={(e) => setDescription(e.target.value)}
-				/>
-				<br />
-				<label htmlFor="author">Assignee: </label>
-				<br />
-				<input
-					className="mt-2 border-2 border-slate-400 w-[40vw]"
-					id="author"
-					type="text"
-					placeholder={'assignee...'}
-					value={assignee}
-					onChange={(e) => setAssignee(e.target.value)}
-				/>
-				{todo?.createdDate && (
-					<p className="mt-2">Created at: {todo!.createdDate}</p>
-				)}
-				<label htmlFor="due">Due Date: </label>
-				<input
-					className="mt-2 border-2 border-slate-400 w-[13vw] h-10"
-					type="date"
-					value={dueDate}
-					onChange={(e) => setDueDate(e.target.value)}
-				/>
-				<br />
-			</div>
+			<EditCreate
+				todo={todo}
+				setTitle={setTitle}
+				handlePriority={handlePriority}
+				handleState={handleState}
+				setDescription={setDescription}
+				setAssignee={setAssignee}
+				setDueDate={setDueDate}
+			/>
 			<div className="mt-5">
 				<button onClick={handleClick}>Update Todo</button>
 				<button className="bg-red-500/80! ml-5" onClick={handleDelete}>
