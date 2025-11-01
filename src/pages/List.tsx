@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom'
-import useTodoStore, { type Todo } from '../store/store'
 import Legend from '../components/Legend'
+import LinkTodo from '../components/LinkTodo'
+import useTodoStore, { type Todo } from '../store/store'
 
 export interface Props {
 	todos: Todo[]
@@ -37,12 +37,13 @@ const List = ({ todos }: Props) => {
 		if (todo.priority === 'High')
 			return 'p-2 bg-red-700/80 rounded cursor-move hover:bg-red-600'
 	}
-
+	const tailCont =
+		'flex flex-col min-h-96 w-[25vw] p-4 border-2 border-gray-400'
 	return (
 		<div className="flex flex-col">
 			<div className="flex gap-8 p-5">
 				<div
-					className="flex flex-col min-h-96 w-[25vw] p-4 border-2 border-gray-300"
+					className={tailCont}
 					onDrop={(e) => handleDrop(e, 'To Do')}
 					onDragOver={handleDragOver}
 				>
@@ -57,15 +58,13 @@ const List = ({ todos }: Props) => {
 									onDragStart={(e) => handleDragStart(e, todo.id)}
 									className={className(todo)}
 								>
-									<Link to={`/todo/${todo.id}`}>
-										<p>{todo.title}</p>
-									</Link>
+									<LinkTodo todo={todo} />
 								</li>
 							))}
 					</ul>
 				</div>
 				<div
-					className="flex flex-col min-h-96 w-[25vw] p-4 border-2 border-gray-300"
+					className={tailCont}
 					onDrop={(e) => handleDrop(e, 'In Progress')}
 					onDragOver={handleDragOver}
 				>
@@ -80,16 +79,14 @@ const List = ({ todos }: Props) => {
 									onDragStart={(e) => handleDragStart(e, todo.id)}
 									className={className(todo)}
 								>
-									<Link to={`/todo/${todo.id}`}>
-										<p>{todo.title}</p>
-									</Link>
+									<LinkTodo todo={todo} />
 								</li>
 							))}
 					</ul>
 				</div>
 
 				<div
-					className="flex flex-col min-h-96 w-[25vw] p-4 border-2 border-gray-300"
+					className={tailCont}
 					onDrop={(e) => handleDrop(e, 'Done')}
 					onDragOver={handleDragOver}
 				>
@@ -104,9 +101,7 @@ const List = ({ todos }: Props) => {
 									onDragStart={(e) => handleDragStart(e, todo.id)}
 									className={className(todo)}
 								>
-									<Link to={`/todo/${todo.id}`}>
-										<p>{todo.title}</p>
-									</Link>
+									<LinkTodo todo={todo} />
 								</li>
 							))}
 					</ul>
