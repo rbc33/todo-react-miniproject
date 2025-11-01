@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import useTodoStore, { type Todo } from '../store/store'
-import Legend from './Legend'
+import Legend from '../components/Legend'
 
 export interface Props {
 	todos: Todo[]
