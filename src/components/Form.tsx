@@ -2,7 +2,13 @@ import React from 'react'
 import type { Todo } from '../store/store'
 
 interface Props {
-	todo?: Todo
+	title?: string
+	description?: string
+	assignee?: string
+	dueDate?: string
+	status: Todo['status']
+	priority?: Todo['priority']
+	createdAt?: string
 	setTitle: (s: string) => void
 	handleState: (e: React.ChangeEvent<HTMLSelectElement>) => void
 	handlePriority: (e: React.ChangeEvent<HTMLSelectElement>) => void
@@ -12,7 +18,13 @@ interface Props {
 }
 
 const EditCreate = ({
-	todo,
+	title,
+	description,
+	assignee,
+	dueDate,
+	status,
+	priority,
+	createdAt,
 	setTitle,
 	handleState,
 	handlePriority,
@@ -27,8 +39,8 @@ const EditCreate = ({
 			<input
 				className="mt-2 border-2 border-slate-400 w-[40vw]"
 				type="text"
-				placeholder={todo ? todo.title : ' title...'}
-				value={todo ? todo.title : ''}
+				placeholder={title ? title : ' title...'}
+				value={title}
 				onChange={(e) => setTitle(e.target.value)}
 			/>
 			<br />
@@ -38,7 +50,7 @@ const EditCreate = ({
 				id="NewTodo"
 				name="status"
 				defaultValue={'To Do'}
-				value={todo ? todo.status : 'To Do'}
+				value={status}
 				onChange={(e) => handleState(e)}
 			>
 				<option value="To Do">To Do</option>
@@ -52,7 +64,7 @@ const EditCreate = ({
 				className="mt-2 border-2 border-slate-400 w-fit"
 				id="NewTodo"
 				name="status"
-				value={todo ? todo.priority : 'undefided'}
+				value={priority}
 				onChange={(e) => handlePriority(e)}
 			>
 				<option value="Low">Low</option>
@@ -65,8 +77,8 @@ const EditCreate = ({
 			<textarea
 				id="description"
 				className="mt-2 border-2 border-slate-400 w-[40vw]"
-				placeholder={' Descrption...'}
-				value={todo ? todo.description : ''}
+				placeholder={' Description...'}
+				value={description}
 				onChange={(e) => setDescription(e.target.value)}
 			/>
 			<br />
@@ -77,7 +89,7 @@ const EditCreate = ({
 				id="author"
 				type="text"
 				placeholder={' assignee...'}
-				value={todo ? todo.assignee : undefined}
+				value={assignee}
 				onChange={(e) => setAssignee(e.target.value)}
 			/>
 			<br />
@@ -85,13 +97,11 @@ const EditCreate = ({
 			<input
 				className="mt-2 border-2 border-slate-400 w-fit text-ecnter h-10"
 				type="date"
-				value={todo ? todo.dueDate : undefined}
+				value={dueDate}
 				onChange={(e) => setDueDate(e.target.value)}
 			/>
 			<br />
-			{todo?.createdDate && (
-				<p className="mt-2">Created at: {todo!.createdDate}</p>
-			)}
+			{createdAt && <p className="mt-2">Created at: {createdAt}</p>}
 		</div>
 	)
 }

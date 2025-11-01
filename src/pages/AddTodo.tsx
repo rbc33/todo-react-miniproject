@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import useTodoStore from '../store/store'
+import useTodoStore, { type Todo } from '../store/store'
 import { useNavigate } from 'react-router-dom'
 import EditCreate from '../components/Form'
 
@@ -9,12 +9,8 @@ const AddTodo = () => {
 	const [description, setDescription] = useState<string>()
 	const [assignee, setAssignee] = useState<string | undefined>()
 	const [dueDate, setDueDate] = useState<string | undefined>()
-	const [status, setStatus] = useState<'To Do' | 'In Progress' | 'Done'>(
-		'To Do'
-	)
-	const [priority, setPriority] = useState<
-		'Low' | 'Medium' | 'High' | undefined
-	>()
+	const [status, setStatus] = useState<Todo['status']>('To Do')
+	const [priority, setPriority] = useState<Todo['priority'] | undefined>()
 	const newId = Math.max(...todos.map((t) => parseInt(t.id))) + 1
 	const navigate = useNavigate()
 
@@ -56,6 +52,7 @@ const AddTodo = () => {
 	return (
 		<div className="flex">
 			<EditCreate
+				status={status}
 				setTitle={setTitle}
 				handlePriority={handlePriority}
 				handleState={handleState}

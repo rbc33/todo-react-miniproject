@@ -30,7 +30,7 @@ const List = ({ todos }: Props) => {
 
 	return (
 		<div className="flex flex-col">
-			<div className="flex gap-8 p-5">
+			<div className="flex gap-8 ml-3 mt-3 p-5">
 				<Panel
 					todos={todos}
 					status="To Do"

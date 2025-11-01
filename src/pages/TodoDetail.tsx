@@ -64,7 +64,13 @@ const TodoDetail = () => {
 	return (
 		<div className="flex">
 			<EditCreate
-				todo={todo}
+				title={title}
+				description={description}
+				assignee={assignee}
+				dueDate={dueDate}
+				status={status}
+				priority={priority}
+				createdAt={todo?.createdDate}
 				setTitle={setTitle}
 				handlePriority={handlePriority}
 				handleState={handleState}
