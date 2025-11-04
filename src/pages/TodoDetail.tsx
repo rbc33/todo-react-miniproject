@@ -34,7 +34,7 @@ const TodoDetail = () => {
 				priority: priority,
 			})
 			navigate('/', {
-				state: { showToast: true, message: 'Todo updated successfully!' },
+				state: { showToast: true, message: `${title} updated` },
 			})
 		}
 	}
@@ -61,7 +61,7 @@ const TodoDetail = () => {
 	const handleDelete = () => {
 		removeTodo(parseInt(todo!.id))
 		navigate('/', {
-			state: { showToast: true, message: 'Todo deleted successfully!' },
+			state: { showToast: true, message: `${title} deleted!` },
 		})
 	}
 

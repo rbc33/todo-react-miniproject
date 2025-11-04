@@ -15,7 +15,7 @@ function App() {
 					<AppRouter />
 					<Footer />
 				</div>
-				<Toaster />
+				<Toaster position="top-right" />
 			</div>
 		</>
 	)

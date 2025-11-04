@@ -17,6 +17,7 @@ const List = ({ todos }: Props) => {
 		if (location.state?.showToast && !toastShown.current) {
 			toast.success(location.state.message)
 			toastShown.current = true
+			window.history.replaceState({}, document.title)
 		}
 	}, [location.state])
 
@@ -31,8 +32,6 @@ const List = ({ todos }: Props) => {
 		const todoId = e.dataTransfer.getData('todoId')
 		const todo = todos.find((t) => t.id === todoId)
 		if (todo) {
-			// const updatedTodo = { ...todo, status: status }
-			// updateTodo(updatedTodo)
 			updateTodo({ ...todo, status: status })
 		}
 	}

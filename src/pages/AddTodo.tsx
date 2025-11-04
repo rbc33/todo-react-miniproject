@@ -29,7 +29,7 @@ const AddTodo = () => {
 				priority: priority,
 			})
 			navigate('/', {
-				state: { showToast: true, message: 'Todo added successfully!' },
+				state: { showToast: true, message: `${title} added` },
 			})
 		}
 	}
