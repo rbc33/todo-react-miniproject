@@ -1,3 +1,4 @@
+import { Toaster } from 'react-hot-toast'
 import './App.css'
 import Aside from './components/Aside'
 import Footer from './components/Footer'
@@ -14,6 +15,7 @@ function App() {
 					<AppRouter />
 					<Footer />
 				</div>
+				<Toaster />
 			</div>
 		</>
 	)

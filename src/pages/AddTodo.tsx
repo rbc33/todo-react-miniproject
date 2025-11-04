@@ -28,7 +28,9 @@ const AddTodo = () => {
 				dueDate: dueDate,
 				priority: priority,
 			})
-			navigate('/')
+			navigate('/', {
+				state: { showToast: true, message: 'Todo added successfully!' },
+			})
 		}
 	}
 	const handleState = (e: React.ChangeEvent<HTMLSelectElement>) => {

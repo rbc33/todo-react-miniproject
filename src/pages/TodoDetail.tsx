@@ -33,7 +33,9 @@ const TodoDetail = () => {
 				dueDate: dueDate,
 				priority: priority,
 			})
-			navigate('/')
+			navigate('/', {
+				state: { showToast: true, message: 'Todo updated successfully!' },
+			})
 		}
 	}
 	const handleState = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -58,7 +60,9 @@ const TodoDetail = () => {
 
 	const handleDelete = () => {
 		removeTodo(parseInt(todo!.id))
-		navigate('/')
+		navigate('/', {
+			state: { showToast: true, message: 'Todo deleted successfully!' },
+		})
 	}
 
 	return (

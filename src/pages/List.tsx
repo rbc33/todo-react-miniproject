@@ -1,3 +1,6 @@
+import { useEffect, useRef } from 'react'
+import toast from 'react-hot-toast'
+import { useLocation } from 'react-router-dom'
 import Legend from '../components/Legend'
 import Panel from '../components/Panel'
 import useTodoStore, { type Todo } from '../store/store'
@@ -7,6 +10,16 @@ interface Props {
 }
 
 const List = ({ todos }: Props) => {
+	const location = useLocation()
+	const toastShown = useRef(false)
+
+	useEffect(() => {
+		if (location.state?.showToast && !toastShown.current) {
+			toast.success(location.state.message)
+			toastShown.current = true
+		}
+	}, [location.state])
+
 	const { updateTodo } = useTodoStore()
 
 	const handleDragStart = (e: React.DragEvent, todoId: string) => {
