@@ -25,6 +25,16 @@ const Aside = () => {
 			</NavLink>
 			<NavLink
 				className={({ isActive }) =>
+					isActive
+						? 'whitespace-nowrap text-slate-400'
+						: 'whitespace-nowrap hover:text-slate-400!'
+				}
+				to="/list"
+			>
+				List
+			</NavLink>
+			<NavLink
+				className={({ isActive }) =>
 					isActive ? 'text-slate-400' : 'hover:text-slate-400!'
 				}
 				to="/about"
