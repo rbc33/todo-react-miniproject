@@ -13,6 +13,11 @@ const Kanban = ({ todos }: Props) => {
 	const location = useLocation()
 	const toastShown = useRef(false)
 
+	// const { todos, loading, error, updateTodo, fetchTodos } = useTodoStore()
+	// useEffect(() => {
+	// 	fetchTodos()
+	// }, [fetchTodos])
+
 	useEffect(() => {
 		if (location.state?.showToast && !toastShown.current) {
 			toast.success(location.state.message)
@@ -20,8 +25,6 @@ const Kanban = ({ todos }: Props) => {
 			window.history.replaceState({}, document.title)
 		}
 	}, [location.state])
-
-	const { updateTodo } = useTodoStore()
 
 	const handleDragStart = (e: React.DragEvent, todoId: string) => {
 		e.dataTransfer.setData('todoId', todoId)
@@ -39,7 +42,13 @@ const Kanban = ({ todos }: Props) => {
 	const handleDragOver = (e: React.DragEvent) => {
 		e.preventDefault()
 	}
+	// if (loading) {
+	// 	return <div className="p-5">Loading todos...</div>
+	// }
 
+	// if (error) {
+	// 	return <div className="p-5 text-red-500">Error: {error.message}</div>
+	// }
 	return (
 		<div className="flex flex-col">
 			<div className="flex gap-8 ml-3 mt-3 p-5">

@@ -5,9 +5,13 @@ import Kanban from '../pages/Kanban'
 import TodoDetail from '../pages/TodoDetail'
 import useTodoStore from '../store/store'
 import List from '../pages/List'
+import { useEffect } from 'react'
 
 const AppRouter = () => {
-	const { todos } = useTodoStore()
+	const { todos, fetchTodos } = useTodoStore()
+	useEffect(() => {
+		fetchTodos()
+	}, [])
 
 	return (
 		<Routes>

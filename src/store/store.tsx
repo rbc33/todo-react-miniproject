@@ -12,7 +12,10 @@ export interface Todo {
 }
 interface TodoStore {
 	todos: Todo[]
-	addTodo: (newTodo: Todo) => void
+	loading?: boolean
+	error?: Error | null
+	fetchTodos: () => Promise<void>
+	addTodo: (newTodo: Todo) => Promise<void>
 	removeTodo: (id: number) => void
 	updateTodo: (updateTodo: Todo) => void
 }
@@ -20,76 +23,74 @@ interface TodoStore {
 const useTodoStore = create<TodoStore>()(
 	persist(
 		(set) => ({
-			todos: [
-				{
-					id: '1',
-					title: 'Design Landing Page',
-					description:
-						'Create a visually appealing landing page for the website.',
-					assignee: 'Mary Davis',
-					status: 'To Do',
-					priority: 'High',
-					createdDate: '2023-09-15',
-					dueDate: '2023-09-30',
-				},
-				{
-					id: '2',
-					title: 'Develop User Registration',
-					description:
-						'Implement user registration functionality with email verification.',
-					assignee: 'Jane Smith',
-					status: 'In Progress',
-					priority: 'Medium',
-					createdDate: '2023-09-16',
-					dueDate: '2023-10-10',
-				},
-				{
-					id: '3',
-					title: 'Bug Fix: Login Issue',
-					description:
-						'Investigate and fix the login problem reported by users.',
-					assignee: 'Mark Johnson',
-					status: 'In Progress',
-					priority: 'High',
-					createdDate: '2023-09-17',
-					dueDate: '2023-09-25',
-				},
-				{
-					id: '4',
-					title: 'Release Version 1.0',
-					description:
-						'Prepare for the release of the first version of the application.',
-					assignee: 'Sarah Brown',
-					status: 'To Do',
-					priority: 'High',
-					createdDate: '2023-09-18',
-					dueDate: '2023-10-05',
-				},
-				{
-					id: '5',
-					title: 'Update Documentation',
-					description:
-						'Update user documentation with the latest features and changes.',
-					assignee: 'David Wilson',
-					status: 'Done',
-					priority: 'Low',
-					createdDate: '2023-09-19',
-					dueDate: '2023-09-30',
-				},
-			],
+			todos: [],
+			fetchTodos: async () => {
+				set({ loading: true, error: null })
+				try {
+					const res = await fetch('http://localhost:5500/todos')
+					const data = await res.json()
+					set({ todos: data, loading: false })
+				} catch (err) {
+					set({ error: err, loading: false })
+				}
+			},
+			addTodo: async (newTodo: Todo) => {
+				try {
+					const res = await fetch('http://localhost:5500/todos', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify(newTodo),
+					})
+					const created = await res.json()
+					set((state) => ({ todos: [...state.todos, created] }))
+				} catch (err) {
+					set({ error: err, loading: false })
+				}
+			},
 
-			addTodo: (newTodo: Todo) =>
-				set((state) => ({ todos: [...state.todos, newTodo] })),
-			removeTodo: (id: number) =>
-				set((state) => ({
-					todos: state.todos.filter((todo) => todo.id !== id.toString()),
-				})),
-			updateTodo: (updateTodo: Todo) =>
-				set((state) => ({
-					todos: state.todos.map((todo) =>
-						todo.id === updateTodo.id ? updateTodo : todo
-					),
-				})),
+			removeTodo: async (id: number) => {
+				try {
+					const res = await fetch(`http://localhost:5500/todos/${id}`, {
+						method: 'DELETE',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+					})
+					const deleted = await res.json()
+					set((state) => ({
+						todos: state.todos.filter(
+							(todo) => todo.id !== deleted.id.toString()
+						),
+					}))
+				} catch (err) {
+					set({ error: err, loading: false })
+				}
+			},
+
+			updateTodo: async (updateTodo: Todo) => {
+				try {
+					const res = await fetch(
+						`http://localhost:5500/todos/${updateTodo.id}`,
+						{
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/json',
+							},
+							body: JSON.stringify(updateTodo),
+						}
+					)
+					const updated = await res.json()
+					set((state) => ({
+						todos: state.todos.map((todo) =>
+							todo.id === updateTodo.id ? updated : todo
+						),
+					}))
+				} catch (err) {
+					set({ error: err, loading: false })
+				}
+			},
 		}),
 		{
 			name: 'todo-storage',
