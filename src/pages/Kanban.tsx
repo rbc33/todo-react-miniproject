@@ -5,18 +5,14 @@ import Legend from '../components/Legend'
 import Panel from '../components/Panel'
 import useTodoStore, { type Todo } from '../store/store'
 
-interface Props {
-	todos: Todo[]
-}
-
-const Kanban = ({ todos }: Props) => {
+const Kanban = () => {
 	const location = useLocation()
 	const toastShown = useRef(false)
 
-	// const { todos, loading, error, updateTodo, fetchTodos } = useTodoStore()
-	// useEffect(() => {
-	// 	fetchTodos()
-	// }, [fetchTodos])
+	const { todos, loading, error, updateTodo, fetchTodos } = useTodoStore()
+	useEffect(() => {
+		fetchTodos()
+	}, [fetchTodos])
 
 	useEffect(() => {
 		if (location.state?.showToast && !toastShown.current) {
@@ -30,25 +26,25 @@ const Kanban = ({ todos }: Props) => {
 		e.dataTransfer.setData('todoId', todoId)
 	}
 
-	const handleDrop = (e: React.DragEvent, status: Todo['status']) => {
+	const handleDrop = async (e: React.DragEvent, status: Todo['status']) => {
 		e.preventDefault()
 		const todoId = e.dataTransfer.getData('todoId')
 		const todo = todos.find((t) => t.id === todoId)
 		if (todo) {
-			updateTodo({ ...todo, status: status })
+			await updateTodo({ ...todo, status: status })
 		}
 	}
 
 	const handleDragOver = (e: React.DragEvent) => {
 		e.preventDefault()
 	}
-	// if (loading) {
-	// 	return <div className="p-5">Loading todos...</div>
-	// }
+	if (loading) {
+		return <div className="p-5">Loading todos...</div>
+	}
 
-	// if (error) {
-	// 	return <div className="p-5 text-red-500">Error: {error.message}</div>
-	// }
+	if (error) {
+		return <div className="p-5 text-red-500">Error: {error.message}</div>
+	}
 	return (
 		<div className="flex flex-col">
 			<div className="flex gap-8 ml-3 mt-3 p-5">

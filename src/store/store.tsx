@@ -21,82 +21,91 @@ interface TodoStore {
 }
 
 const useTodoStore = create<TodoStore>()(
-	persist(
-		(set) => ({
-			todos: [],
-			fetchTodos: async () => {
-				set({ loading: true, error: null })
-				try {
-					const res = await fetch('http://localhost:5500/todos')
-					const data = await res.json()
-					set({ todos: data, loading: false })
-				} catch (err) {
-					set({ error: err, loading: false })
-				}
-			},
-			addTodo: async (newTodo: Todo) => {
-				try {
-					const res = await fetch('http://localhost:5500/todos', {
-						method: 'POST',
+	// persist(
+	(set) => ({
+		todos: [],
+		fetchTodos: async () => {
+			set({ loading: true, error: null })
+			try {
+				const res = await fetch('http://localhost:5500/todos')
+				const data = await res.json()
+				set({ todos: data, loading: false })
+			} catch (err) {
+				set({ error: err, loading: false })
+			}
+		},
+		addTodo: async (newTodo: Todo) => {
+			try {
+				const res = await fetch('http://localhost:5500/todos', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(newTodo),
+				})
+				const created = await res.json()
+				set((state) => ({ todos: [...state.todos, created] }))
+			} catch (err) {
+				set({ error: err, loading: false })
+			}
+		},
+
+		removeTodo: async (id: number) => {
+			try {
+				const res = await fetch(`http://localhost:5500/todos/${id}`, {
+					method: 'DELETE',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+				})
+				const deleted = await res.json()
+				set((state) => ({
+					todos: state.todos.filter(
+						(todo) => todo.id !== deleted.id.toString()
+					),
+				}))
+			} catch (err) {
+				set({ error: err, loading: false })
+			}
+		},
+
+		updateTodo: async (updateTodo: Todo) => {
+			const originalTodos = useTodoStore.getState().todos
+			const originalTodo = originalTodos.find((t) => t.id === updateTodo.id)
+			try {
+				set((state) => ({
+					todos: state.todos.map((todo) =>
+						todo.id === updateTodo.id ? updateTodo : todo
+					),
+				}))
+				const res = await fetch(
+					`http://localhost:5500/todos/${updateTodo.id}`,
+					{
+						method: 'PUT',
 						headers: {
 							'Content-Type': 'application/json',
 						},
-						body: JSON.stringify(newTodo),
-					})
-					const created = await res.json()
-					set((state) => ({ todos: [...state.todos, created] }))
-				} catch (err) {
-					set({ error: err, loading: false })
-				}
-			},
-
-			removeTodo: async (id: number) => {
-				try {
-					const res = await fetch(`http://localhost:5500/todos/${id}`, {
-						method: 'DELETE',
-						headers: {
-							'Content-Type': 'application/json',
-						},
-					})
-					const deleted = await res.json()
-					set((state) => ({
-						todos: state.todos.filter(
-							(todo) => todo.id !== deleted.id.toString()
-						),
-					}))
-				} catch (err) {
-					set({ error: err, loading: false })
-				}
-			},
-
-			updateTodo: async (updateTodo: Todo) => {
-				try {
-					const res = await fetch(
-						`http://localhost:5500/todos/${updateTodo.id}`,
-						{
-							method: 'POST',
-							headers: {
-								'Content-Type': 'application/json',
-							},
-							body: JSON.stringify(updateTodo),
-						}
-					)
-					const updated = await res.json()
+						body: JSON.stringify(updateTodo),
+					}
+				)
+			} catch (err) {
+				if (originalTodo) {
 					set((state) => ({
 						todos: state.todos.map((todo) =>
-							todo.id === updateTodo.id ? updated : todo
+							todo.id === updateTodo.id ? originalTodo : todo
 						),
 					}))
-				} catch (err) {
-					set({ error: err, loading: false })
 				}
-			},
-		}),
-		{
-			name: 'todo-storage',
-			storage: createJSONStorage(() => localStorage),
-		}
-	)
+
+				set({ error: err!, loading: false })
+			}
+		},
+	})
+	// {
+	// 	name: 'todo-storage',
+	// 	storage: createJSONStorage(() => localStorage),
+	// // }
+	// )
 )
 
 export default useTodoStore
