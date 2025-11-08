@@ -15,8 +15,8 @@ const AppRouter = () => {
 
 	return (
 		<Routes>
-			<Route path="/" element={<Kanban todos={todos} />} />
-			<Route path="/List" element={<List todos={todos} />} />
+			<Route path="/" element={<Kanban />} />
+			<Route path="/list" element={<List todos={todos} />} />
 
 			<Route path="/todo/:id" element={<TodoDetail />} />
 			<Route path="/addtodo" element={<AddTodo />} />
