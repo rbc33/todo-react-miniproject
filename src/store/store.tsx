@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { persist, createJSONStorage } from 'zustand/middleware'
+// import { persist, createJSONStorage } from 'zustand/middleware'
 export interface Todo {
 	id: string
 	title: string
@@ -27,16 +27,17 @@ const useTodoStore = create<TodoStore>()(
 		fetchTodos: async () => {
 			set({ loading: true, error: null })
 			try {
-				const res = await fetch('http://localhost:5500/todos')
+				const res = await fetch('http://158.179.219.166:5500/todos')
 				const data = await res.json()
 				set({ todos: data, loading: false })
 			} catch (err) {
-				set({ error: err, loading: false })
+				const error = err instanceof Error ? err : new Error(String(err))
+				set({ error: error, loading: false })
 			}
 		},
 		addTodo: async (newTodo: Todo) => {
 			try {
-				const res = await fetch('http://localhost:5500/todos', {
+				const res = await fetch('http://158.179.219.166:5500/todos', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
@@ -46,13 +47,14 @@ const useTodoStore = create<TodoStore>()(
 				const created = await res.json()
 				set((state) => ({ todos: [...state.todos, created] }))
 			} catch (err) {
-				set({ error: err, loading: false })
+				const error = err instanceof Error ? err : new Error(String(err))
+				set({ error: error, loading: false })
 			}
 		},
 
 		removeTodo: async (id: number) => {
 			try {
-				const res = await fetch(`http://localhost:5500/todos/${id}`, {
+				const res = await fetch(`http://158.179.219.166:5500/todos/${id}`, {
 					method: 'DELETE',
 					headers: {
 						'Content-Type': 'application/json',
@@ -65,7 +67,8 @@ const useTodoStore = create<TodoStore>()(
 					),
 				}))
 			} catch (err) {
-				set({ error: err, loading: false })
+				const error = err instanceof Error ? err : new Error(String(err))
+				set({ error: error, loading: false })
 			}
 		},
 
@@ -78,16 +81,13 @@ const useTodoStore = create<TodoStore>()(
 						todo.id === updateTodo.id ? updateTodo : todo
 					),
 				}))
-				const res = await fetch(
-					`http://localhost:5500/todos/${updateTodo.id}`,
-					{
-						method: 'PUT',
-						headers: {
-							'Content-Type': 'application/json',
-						},
-						body: JSON.stringify(updateTodo),
-					}
-				)
+				await fetch(`http://158.179.219.166:5500/todos/${updateTodo.id}`, {
+					method: 'PUT',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(updateTodo),
+				})
 			} catch (err) {
 				if (originalTodo) {
 					set((state) => ({
@@ -97,7 +97,8 @@ const useTodoStore = create<TodoStore>()(
 					}))
 				}
 
-				set({ error: err!, loading: false })
+				const error = err instanceof Error ? err : new Error(String(err))
+				set({ error: error, loading: false })
 			}
 		},
 	})
