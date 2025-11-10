@@ -8,15 +8,10 @@ import List from '../pages/List'
 import { useEffect } from 'react'
 
 const AppRouter = () => {
-	const { todos, fetchTodos } = useTodoStore()
-	useEffect(() => {
-		fetchTodos()
-	}, [])
-
 	return (
 		<Routes>
 			<Route path="/" element={<Kanban />} />
-			<Route path="/list" element={<List todos={todos} />} />
+			<Route path="/list" element={<List />} />
 
 			<Route path="/todo/:id" element={<TodoDetail />} />
 			<Route path="/addtodo" element={<AddTodo />} />
