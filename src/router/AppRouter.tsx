@@ -2,10 +2,8 @@ import { Route, Routes } from 'react-router-dom'
 import About from '../pages/About'
 import AddTodo from '../pages/AddTodo'
 import Kanban from '../pages/Kanban'
-import TodoDetail from '../pages/TodoDetail'
-import useTodoStore from '../store/store'
 import List from '../pages/List'
-import { useEffect } from 'react'
+import TodoDetail from '../pages/TodoDetail'
 
 const AppRouter = () => {
 	return (
