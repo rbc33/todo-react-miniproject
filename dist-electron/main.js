@@ -1,38 +1,53 @@
-import { app as o, BrowserWindow as i } from "electron";
-import { fileURLToPath as l } from "node:url";
-import e from "node:path";
-const t = e.dirname(l(import.meta.url));
-process.env.APP_ROOT = e.join(t, "..");
-const s = process.env.VITE_DEV_SERVER_URL, _ = e.join(process.env.APP_ROOT, "dist-electron"), r = e.join(process.env.APP_ROOT, "dist");
-process.env.VITE_PUBLIC = s ? e.join(process.env.APP_ROOT, "public") : r;
-let n;
-o.name = "Kanban";
-function c() {
-  if (n = new i({
-    icon: e.join(process.env.VITE_PUBLIC || "", "build/icon.icns"),
-    // Usar VITE_PUBLIC
+import { app, BrowserWindow } from "electron";
+import { fileURLToPath } from "node:url";
+import path from "node:path";
+const __dirname$1 = path.dirname(fileURLToPath(import.meta.url));
+process.env.APP_ROOT = path.join(__dirname$1, "..");
+const VITE_DEV_SERVER_URL = process.env["VITE_DEV_SERVER_URL"];
+const MAIN_DIST = path.join(process.env.APP_ROOT, "dist-electron");
+const RENDERER_DIST = path.join(process.env.APP_ROOT, "dist");
+process.env.VITE_PUBLIC = VITE_DEV_SERVER_URL ? path.join(process.env.APP_ROOT, "public") : RENDERER_DIST;
+let win;
+app.name = "Kanban";
+function createWindow() {
+  win = new BrowserWindow({
+    icon: path.join(process.env.VITE_PUBLIC || "", "build/icon.icns"),
+    width: 1280,
+    height: 720,
     webPreferences: {
-      preload: e.join(t, "preload.mjs")
+      preload: path.join(__dirname$1, "preload.mjs")
     }
-  }), n.webContents.on("did-finish-load", () => {
-    n == null || n.webContents.send("main-process-message", (/* @__PURE__ */ new Date()).toLocaleString());
-  }), s ? n.loadURL(s) : n.loadFile(e.join(r, "index.html")), process.platform === "darwin") {
-    const a = e.join(
+  });
+  win.webContents.on("did-finish-load", () => {
+    win == null ? void 0 : win.webContents.send("main-process-message", (/* @__PURE__ */ new Date()).toLocaleString());
+  });
+  if (VITE_DEV_SERVER_URL) {
+    win.loadURL(VITE_DEV_SERVER_URL);
+  } else {
+    win.loadFile(path.join(RENDERER_DIST, "index.html"));
+  }
+  if (process.platform === "darwin") {
+    const dockIcon = path.join(
       process.env.VITE_PUBLIC || "",
       "kanban-white.png"
     );
-    o.dock.setIcon(a);
+    app.dock.setIcon(dockIcon);
   }
 }
-o.on("window-all-closed", () => {
-  process.platform !== "darwin" && (o.quit(), n = null);
+app.on("window-all-closed", () => {
+  if (process.platform !== "darwin") {
+    app.quit();
+    win = null;
+  }
 });
-o.on("activate", () => {
-  i.getAllWindows().length === 0 && c();
+app.on("activate", () => {
+  if (BrowserWindow.getAllWindows().length === 0) {
+    createWindow();
+  }
 });
-o.whenReady().then(c);
+app.whenReady().then(createWindow);
 export {
-  _ as MAIN_DIST,
-  r as RENDERER_DIST,
-  s as VITE_DEV_SERVER_URL
+  MAIN_DIST,
+  RENDERER_DIST,
+  VITE_DEV_SERVER_URL
 };

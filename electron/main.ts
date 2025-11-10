@@ -32,7 +32,9 @@ app.name = 'Kanban'
 
 function createWindow() {
 	win = new BrowserWindow({
-		icon: path.join(process.env.VITE_PUBLIC || '', 'build/icon.icns'), // Usar VITE_PUBLIC
+		icon: path.join(process.env.VITE_PUBLIC || '', 'build/icon.icns'),
+		width: 1280,
+		height: 720,
 		webPreferences: {
 			preload: path.join(__dirname, 'preload.mjs'),
 		},
