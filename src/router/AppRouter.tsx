@@ -11,7 +11,7 @@ const AppRouter = () => {
 	const { todos, fetchTodos } = useTodoStore()
 	useEffect(() => {
 		fetchTodos()
-	}, [])
+	}, [fetchTodos])
 
 	return (
 		<Routes>

@@ -29,7 +29,7 @@ const List = ({ todos }: Props) => {
 							<tbody>
 								{todos.map((t) => (
 									<tr
-										className={className(t) + ' border-2 border-slate-700'}
+										className={className(t) + ' border-2 border-slate-900'}
 										key={t.id}
 									>
 										<th

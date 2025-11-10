@@ -1,0 +1,24 @@
+{
+	"productName": "Kanban",
+	"appId": "com.kanban.app",
+	"directories": {
+		"output": "release/${version}",
+		"buildResources": "build"
+	},
+	"files": ["dist/**/*", "dist-electron/**/*"],
+	"mac": {
+		"icon": "public/icon.icns",
+		"category": "public.app-category.productivity",
+		"target": ["dmg"],
+		"artifactName": "${productName}-${version}-${arch}.${ext}",
+		"extendInfo": {
+			"CFBundleName": "Kanban",
+			"CFBundleDisplayName": "Kanban"
+		}
+	},
+	"dmg": {
+		"icon": "public/icon.icns",
+		"title": "${productName} ${version}",
+		"artifactName": "${productName}-Mac-${version}-Installer.${ext}"
+	}
+}

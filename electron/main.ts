@@ -28,9 +28,11 @@ process.env.VITE_PUBLIC = VITE_DEV_SERVER_URL
 
 let win: BrowserWindow | null
 
+app.name = 'Kanban'
+
 function createWindow() {
 	win = new BrowserWindow({
-		icon: path.join(process.env.VITE_PUBLIC, 'electron-vite.svg'),
+		icon: path.join(process.env.VITE_PUBLIC || '', 'build/icon.icns'), // Usar VITE_PUBLIC
 		webPreferences: {
 			preload: path.join(__dirname, 'preload.mjs'),
 		},
@@ -44,8 +46,15 @@ function createWindow() {
 	if (VITE_DEV_SERVER_URL) {
 		win.loadURL(VITE_DEV_SERVER_URL)
 	} else {
-		// win.loadFile('dist/index.html')
 		win.loadFile(path.join(RENDERER_DIST, 'index.html'))
+	}
+
+	if (process.platform === 'darwin') {
+		const dockIcon = path.join(
+			process.env.VITE_PUBLIC || '',
+			'kanban-white.png'
+		)
+		app.dock.setIcon(dockIcon)
 	}
 }
 
