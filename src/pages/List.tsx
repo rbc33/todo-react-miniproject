@@ -13,12 +13,12 @@ const List = () => {
 	if (loading) {
 		return (
 			<div role="status" className="w-[80vw] animate-pulse">
-				<div className="h-10 bg-gray-200 rounded-2xl dark:bg-gray-700 w-[80vw] mb-4"></div>
-				<div className="h-10 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[80vw] mb-2.5"></div>
-				<div className="h-10 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5"></div>
-				<div className="h-10 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[80vw] mb-2.5"></div>
-				<div className="h-10 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[80vw] mb-2.5"></div>
-				<div className="h-10 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[80vw]"></div>
+				<div className="h-10 bg-gray-200  dark:bg-gray-700 w-[80vw] mb-4"></div>
+				<div className="h-10 bg-gray-200  dark:bg-gray-700 max-w-[80vw] mb-2.5"></div>
+				<div className="h-10 bg-gray-200  dark:bg-gray-700 mb-2.5"></div>
+				<div className="h-10 bg-gray-200  dark:bg-gray-700 max-w-[80vw] mb-2.5"></div>
+				<div className="h-10 bg-gray-200  dark:bg-gray-700 max-w-[80vw] mb-2.5"></div>
+				<div className="h-10 bg-gray-200  dark:bg-gray-700 max-w-[80vw]"></div>
 				<span className="sr-only">Loading...</span>
 			</div>
 		)
