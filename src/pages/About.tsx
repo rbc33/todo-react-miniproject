@@ -13,9 +13,9 @@ const About = () => {
 				connected to a JSON Server deployed on a VPS.
 			</p>
 			<p>
-				Enhanced with custom <strong>Google Fonts</strong> integration, elegant{' '}
-				<strong>Flowbite</strong> table components, and loading skeletons to
-				improve user experience during data fetching.
+				Includes custom <strong>Google Fonts</strong> integration,{' '}
+				<strong>Flowbite</strong> table components, and{' '}
+				<strong>Flowbite</strong> loading skeletons to improve user experience.
 			</p>
 		</div>
 	)
