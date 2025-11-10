@@ -1,10 +1,22 @@
+import { useEffect } from 'react'
 import LinkTodo from '../components/LinkTodo'
-import type { Todo } from '../store/store'
 import useTodoStore from '../store/store'
 import { className } from '../utils/todoUtils'
 
 const List = () => {
-	const { todos } = useTodoStore()
+	const { todos, loading, error, fetchTodos } = useTodoStore()
+
+	useEffect(() => {
+		fetchTodos()
+	}, [])
+
+	if (loading) {
+		return <div className="p-5">Loading todos...</div>
+	}
+
+	if (error) {
+		return <div className="p-5 text-red-500">Error: {error.message}</div>
+	}
 	return (
 		<>
 			{todos && (
