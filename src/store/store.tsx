@@ -19,7 +19,7 @@ interface TodoStore {
 	removeTodo: (id: number) => void
 	updateTodo: (updateTodo: Todo) => void
 }
-const BASE_URL = 'http://158.179.219.166:5500'
+const BASE_URL = 'http://158.179.219.166:5500/todos'
 
 const useTodoStore = create<TodoStore>()(
 	// persist(
@@ -28,7 +28,7 @@ const useTodoStore = create<TodoStore>()(
 		fetchTodos: async () => {
 			set({ loading: true, error: null })
 			try {
-				const res = await fetch(BASE_URL + '/todos')
+				const res = await fetch(BASE_URL)
 				const data = await res.json()
 				set({ todos: data, loading: false })
 			} catch (err) {
@@ -55,7 +55,7 @@ const useTodoStore = create<TodoStore>()(
 
 		removeTodo: async (id: number) => {
 			try {
-				const res = await fetch(BASE_URL + `/todos/${id}`, {
+				const res = await fetch(BASE_URL + `/${id}`, {
 					method: 'DELETE',
 					headers: {
 						'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ const useTodoStore = create<TodoStore>()(
 						todo.id === updateTodo.id ? updateTodo : todo
 					),
 				}))
-				await fetch(BASE_URL + `/todos/${updateTodo.id}`, {
+				await fetch(BASE_URL + `/${updateTodo.id}`, {
 					method: 'PUT',
 					headers: {
 						'Content-Type': 'application/json',
