@@ -27,10 +27,7 @@ function createWindow() {
     win.loadFile(path.join(RENDERER_DIST, "index.html"));
   }
   if (process.platform === "darwin") {
-    const dockIcon = path.join(
-      process.env.VITE_PUBLIC || "",
-      "kanban-white.png"
-    );
+    const dockIcon = path.join(process.env.VITE_PUBLIC || "", "kanban.png");
     app.dock.setIcon(dockIcon);
   }
 }

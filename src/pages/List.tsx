@@ -1,12 +1,9 @@
 import LinkTodo from '../components/LinkTodo'
-import type { Todo } from '../store/store'
+import useTodoStore from '../store/store'
 import { className } from '../utils/todoUtils'
 
-interface Props {
-	todos: Todo[]
-}
-
-const List = ({ todos }: Props) => {
+const List = () => {
+	const { todos } = useTodoStore()
 	return (
 		<>
 			{todos && (
