@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import useTodoStore from '../store/store'
 import EditCreate from '../components/Form'
+import { FaTrashAlt } from 'react-icons/fa'
 
 const TodoDetail = () => {
 	const { id } = useParams()
@@ -84,8 +85,11 @@ const TodoDetail = () => {
 			/>
 			<div className="mt-5">
 				<button onClick={handleClick}>Update Todo</button>
-				<button className="bg-red-500/80! ml-5" onClick={handleDelete}>
-					Delete Todo
+				<button
+					className="bg-red-500/80! mt-5 flex items-center justify-center"
+					onClick={handleDelete}
+				>
+					<FaTrashAlt className="" />
 				</button>
 			</div>
 		</div>
