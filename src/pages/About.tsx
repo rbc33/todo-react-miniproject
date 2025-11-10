@@ -3,7 +3,7 @@ const About = () => {
 		<div className="text-2xl p-5 w-[60vw] leading-relaxed">
 			<h2 className="text-3xl font-bold mb-4">Kanban Board Application</h2>
 			<p className="mb-4">
-				A modern Kanban board built with <strong>React</strong>,{' '}
+				A Kanban board built with <strong>React</strong>,{' '}
 				<strong>TypeScript</strong>, and <strong>Tailwind CSS</strong>.
 			</p>
 			<p className="mb-4">
@@ -12,9 +12,9 @@ const About = () => {
 				connected to a JSON Server deployed on a VPS.
 			</p>
 			<p>
-				Enhanced with custom <strong>Google Fonts</strong> integration and
-				elegant <strong>Flowbite</strong> table components for a polished user
-				experience.
+				Includes custom <strong>Google Fonts</strong> integration,{' '}
+				<strong>Flowbite</strong> table components, and{' '}
+				<strong>Flowbite</strong> loading skeletons to improve user experience.
 			</p>
 		</div>
 	)
