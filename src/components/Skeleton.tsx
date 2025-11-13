@@ -1,4 +1,3 @@
-import React from 'react'
 import Legend from './Legend'
 
 const Skeleton = () => {
