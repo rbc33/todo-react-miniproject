@@ -1,6 +1,6 @@
 import { create } from 'zustand'
+import { deleteTodo, getTodos, postTodo, putTodo } from '../api/apiClient'
 // import { persist, createJSONStorage } from 'zustand/middleware'
-
 export interface Todo {
 	id: string
 	title: string
@@ -21,8 +21,6 @@ interface TodoStore {
 	updateTodo: (updateTodo: Todo) => void
 }
 
-const BASE_URL = 'http://158.179.219.166:5500/todos'
-
 const useTodoStore = create<TodoStore>()(
 	// persist(
 	(set) => ({
@@ -30,8 +28,7 @@ const useTodoStore = create<TodoStore>()(
 		fetchTodos: async () => {
 			set({ loading: true, error: null })
 			try {
-				const res = await fetch(BASE_URL)
-				const data = await res.json()
+				const data = await getTodos()
 				set({ todos: data, loading: false })
 			} catch (err) {
 				const error = err instanceof Error ? err : new Error(String(err))
@@ -40,14 +37,7 @@ const useTodoStore = create<TodoStore>()(
 		},
 		addTodo: async (newTodo: Todo) => {
 			try {
-				const res = await fetch(BASE_URL, {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify(newTodo),
-				})
-				const created = await res.json()
+				const created = await postTodo(newTodo)
 				set((state) => ({ todos: [...state.todos, created] }))
 			} catch (err) {
 				const error = err instanceof Error ? err : new Error(String(err))
@@ -57,13 +47,7 @@ const useTodoStore = create<TodoStore>()(
 
 		removeTodo: async (id: number) => {
 			try {
-				const res = await fetch(BASE_URL + `/${id}`, {
-					method: 'DELETE',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-				})
-				const deleted = await res.json()
+				const deleted = await deleteTodo(id)
 				set((state) => ({
 					todos: state.todos.filter(
 						(todo) => todo.id !== deleted.id.toString()
@@ -84,22 +68,7 @@ const useTodoStore = create<TodoStore>()(
 						todo.id === updateTodo.id ? updateTodo : todo
 					),
 				}))
-				const res = await fetch(BASE_URL + `/${updateTodo.id}`, {
-					method: 'PUT',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify(updateTodo),
-				})
-				if (!res.ok) {
-					if (originalTodo) {
-						set((state) => ({
-							todos: state.todos.map((todo) =>
-								todo.id === updateTodo.id ? originalTodo : todo
-							),
-						}))
-					}
-				}
+				await putTodo(updateTodo)
 			} catch (err) {
 				if (originalTodo) {
 					set((state) => ({
@@ -117,7 +86,7 @@ const useTodoStore = create<TodoStore>()(
 	// {
 	// 	name: 'todo-storage',
 	// 	storage: createJSONStorage(() => localStorage),
-	// }
+	// // }
 	// )
 )
 
