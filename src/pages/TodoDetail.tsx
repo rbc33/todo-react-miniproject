@@ -1,90 +1,50 @@
-import { useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import useTodoStore from '../store/store'
-import EditCreate from '../components/Form'
+
+import { useEffect } from 'react'
 import { FaTrashAlt } from 'react-icons/fa'
 
 const TodoDetail = () => {
 	const { id } = useParams()
-	const { todos, updateTodo, removeTodo } = useTodoStore()
+	const { todos, loading, fetchTodos, removeTodo } = useTodoStore()
+	const navigate = useNavigate()
 	const todo = todos.find((t) => t.id === id!)
 
-	const [title, setTitle] = useState<string>(todo!.title)
-	const [description, setDescription] = useState<string>(todo!.description)
-	const [assignee, setAssignee] = useState<string | undefined>(todo!.assignee)
-	const [dueDate, setDueDate] = useState(todo!.dueDate)
-	const [status, setStatus] = useState<'To Do' | 'In Progress' | 'Done'>(
-		todo!.status
-	)
-	const [priority, setPriority] = useState<
-		'Low' | 'Medium' | 'High' | undefined
-	>(todo!.priority)
-
-	const navigate = useNavigate()
-
-	const handleClick = () => {
-		if (title && description) {
-			updateTodo({
-				...todo,
-				id: todo!.id.toString(),
-				title: title,
-				status: status,
-				description: description,
-				assignee: assignee,
-				dueDate: dueDate,
-				priority: priority,
-			})
-			navigate('/', {
-				state: { showToast: true, message: `${title} updated` },
-			})
+	useEffect(() => {
+		if (todos.length === 0) {
+			fetchTodos()
 		}
-	}
-	const handleState = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		e.preventDefault()
-		if (
-			e.target.value === 'To Do' ||
-			e.target.value === 'In Progress' ||
-			e.target.value === 'Done'
-		)
-			setStatus(e!.target!.value!)
-	}
-
-	const handlePriority = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		e.preventDefault()
-		if (
-			e.target.value === 'Low' ||
-			e.target.value === 'Medium' ||
-			e.target.value === 'High'
-		)
-			setPriority(e!.target!.value!)
-	}
+	}, [])
 
 	const handleDelete = () => {
 		removeTodo(parseInt(todo!.id))
 		navigate('/', {
-			state: { showToast: true, message: `${title} deleted!` },
+			state: { showToast: true, message: `${todo!.title} deleted!` },
 		})
 	}
-
+	
+	if (loading) return <div>Loading...</div>
+	if (!todo) return <div>Todo not found</div>
 	return (
-		<div className="flex">
-			<EditCreate
-				title={title}
-				description={description}
-				assignee={assignee}
-				dueDate={dueDate}
-				status={status}
-				priority={priority}
-				createdAt={todo?.createdDate}
-				setTitle={setTitle}
-				handlePriority={handlePriority}
-				handleState={handleState}
-				setDescription={setDescription}
-				setAssignee={setAssignee}
-				setDueDate={setDueDate}
-			/>
-			<div className="mt-5">
-				<button onClick={handleClick}>Update Todo</button>
+		<div className='flex gap-20'>
+		<div className="text-2xl space-x-2 space-y-3.5 p-5">
+			<p>Title: {todo!.title} </p>
+			
+			<p>Status: {todo!.status}</p>
+			
+			<p>Priority: {todo!.priority?? "not setted"}</p>
+
+			
+			<p>Description: {todo!.description}</p> 
+			
+			<p>Assignee: {todo!.assignee?? "not assigned"}</p>
+			
+			<p>Due Date: {todo!.dueDate?? "not due date"}</p>
+			
+			<p>Created at: {todo!.createdDate}</p>
+		</div>
+		<div className="mt-5">
+			<button className='h-16 mt-'><Link to={`/todo/${id}/edit`}>Edit</Link></button>
 				<button
 					className="bg-red-500/80! mt-5 flex items-center justify-center"
 					onClick={handleDelete}

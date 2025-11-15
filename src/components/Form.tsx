@@ -17,7 +17,7 @@ interface Props {
 	setDueDate: (s?: string) => void
 }
 
-const EditCreate = ({
+const Form = ({
 	title,
 	description,
 	assignee,
@@ -49,8 +49,7 @@ const EditCreate = ({
 				className="mt-2 border-2 border-slate-400 w-fit"
 				id="NewTodo"
 				name="status"
-				defaultValue={'To Do'}
-				value={status}
+				value={status?? "To Do"}
 				onChange={(e) => handleState(e)}
 			>
 				<option value="To Do">To Do</option>
@@ -106,4 +105,4 @@ const EditCreate = ({
 	)
 }
 
-export default EditCreate
+export default Form
