@@ -81,6 +81,7 @@ const TodoEdit= () => {
 	// }
 	
 	if (loading) return <div>Loading...</div>
+	if (!todo) return <div>Todo not found</div>
 
 	return (
 		<div className="flex">
