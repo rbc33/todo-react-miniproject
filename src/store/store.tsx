@@ -50,7 +50,7 @@ const useTodoStore = create<TodoStore>()(
 				const deleted = await deleteTodo(id)
 				set((state) => ({
 					todos: state.todos.filter(
-						(todo) => todo.id !== deleted.id.toString()
+						(todo) => todo.id !== deleted.id
 					),
 				}))
 			} catch (err) {
